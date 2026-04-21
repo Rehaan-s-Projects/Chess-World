@@ -39,6 +39,7 @@ A playable, testable skeleton that proves out the engine, architecture, and visu
 - 3 lives, rewind.
 - Animated loading screen, full zombie/human attack animations, sound design.
 - iOS build pipeline, cloud save.
+- **"World cure" transition on white victory** (Phase 2): when white wins, the background environment animates from the dark/decayed state back to a "normal" / clean state — fog clears, graveyard greens back up, stone walls brighten. The board architecture in Phase 1 must make this addition cheap (see §3.4 Visual reference).
 
 ## 3. Architecture
 
@@ -116,6 +117,7 @@ Main
 | `SelectionController.cs` | Tap state machine: no-selection → selected → move-attempted. Queries `GameEngine` for legal moves, drives highlights, submits approved moves. |
 | `SpriteCatalog.cs` | `ScriptableObject` mapping `(Side, PieceType) → Sprite / AnimationClip`. Blender art drops in with no code change. |
 | `CameraFit.cs` | One-time orthographic sizing + Android safe-area handling. |
+| `BackgroundView.cs` | Renders the atmospheric backdrop from a `WorldState` value (`Decayed` in Phase 1; `Cured` reserved for Phase 2's world-cure transition). Reads its art from `SpriteCatalog`. |
 
 **Turn flow:**
 1. `SelectionController` emits a legal `Move` → `GameController.TryPlayerMove(move)`.
@@ -130,7 +132,21 @@ Main
 - Tap an illegal square → deselect, no move.
 - Tap during AI turn → ignored.
 
-### 3.3 Animation (Phase 1, intentionally minimal)
+### 3.3 Visual reference
+
+The background inspiration is a dense horror-chess mashup, combining all of:
+- **Dark, foggy, decaying cityscape** — ruined post-apocalyptic urban backdrop with atmospheric haze.
+- **Graveyard / cemetery at night** — tombstones, moonlight, bare trees, fog.
+- **Stone / castle dungeon** — old-world chess framing: torch-lit stone walls, cracked masonry immediately around the board.
+- **Abstract texture and mood** — heavy grit, moody black/white palette, not a photorealistic scene.
+
+Reference image: a DeviantArt Stash link provided by the author (`https://www.deviantart.com/stash/0nn4xcybbjn`). The reference is used for **mood and palette only** — not copied, traced, or shipped. Actual background art is produced by the Blender pipeline.
+
+**Phase 1 placeholder:** a single desaturated textured sprite that evokes the above mood. Good enough to playtest; not final art.
+
+**Phase 2 "world cure" transition (out of scope for Phase 1 but accommodated by architecture):** on white victory, the background environment animates from the decayed state back to a "normal" / clean state — fog clears, vegetation recolors, stone brightens. Because rendering is driven by a single `BackgroundView` MonoBehaviour reading a "world-state" value (`Decayed` / `Cured`), Phase 2 adds the animated transition without touching the rules engine or any other game code.
+
+### 3.4 Animation (Phase 1, intentionally minimal)
 
 - **Piece slide:** hand-rolled coroutine tweens `transform.position` over ~0.25s with easing (no external tween dependency).
 - **Capture:** the captured `PieceView` fades alpha to 0 over ~0.3s, then is destroyed. Phase 2 replaces this with full zombie/human attack sequences.
