@@ -140,9 +140,13 @@ The background inspiration is a dense horror-chess mashup, combining all of:
 - **Stone / castle dungeon** — old-world chess framing: torch-lit stone walls, cracked masonry immediately around the board.
 - **Abstract texture and mood** — heavy grit, moody black/white palette, not a photorealistic scene.
 
-Reference image: a DeviantArt Stash link provided by the author (`https://www.deviantart.com/stash/0nn4xcybbjn`). The reference is used for **mood and palette only** — not copied, traced, or shipped. Actual background art is produced by the Blender pipeline.
+**Artwork credit:** the reference image *"Chess World"* is by **Rehaan Rashid** (DeviantArt username `RehaanRashid`), © 2026, provided at `https://www.deviantart.com/stash/0nn4xcybbjn`. Rehaan has granted permission for the image to be used as the Phase 1 board background.
 
-**Phase 1 placeholder:** a single desaturated textured sprite that evokes the above mood. Good enough to playtest; not final art.
+**Shipping the image:** the PNG lives in the repo at `reference-art/chess-world-background-by-rehaan-rashid.png` (Rehaan's original, unmodified). When Unity is scaffolded during implementation, the file is copied to `Assets/Art/Backgrounds/` and imported as a `Sprite`. `SpriteCatalog` points `BackgroundView` at it for the `Decayed` world state.
+
+**In-game credit:** a "Credits" entry is added to the game-over and future main-menu screens reading *"Background art by Rehaan Rashid."* This is carried through every phase; removing the image means removing the credit, not the other way around.
+
+**Phase 1 placeholder fallback:** if Rehaan's image is not yet in `reference-art/` when Phase 1 is built, `BackgroundView` falls back to a plain dark desaturated gradient so the game remains runnable. The credit line is suppressed in that fallback state.
 
 **Phase 2 "world cure" transition (out of scope for Phase 1 but accommodated by architecture):** on white victory, the background environment animates from the decayed state back to a "normal" / clean state — fog clears, vegetation recolors, stone brightens. Because rendering is driven by a single `BackgroundView` MonoBehaviour reading a "world-state" value (`Decayed` / `Cured`), Phase 2 adds the animated transition without touching the rules engine or any other game code.
 
