@@ -186,18 +186,21 @@ No retry logic and no user-facing error UI in Phase 1. Real error handling lands
 
 User-level command at `~/.claude/commands/chess-android.md`. When invoked, executes:
 
-1. `adb devices` — if no emulator is running, start the default AVD via `$ANDROID_HOME/emulator/emulator -avd <AVD_NAME>` in the background.
+1. `adb devices` — if no emulator is running, start an AVD in the background. AVD name is read from the `CHESS_WORLD_AVD` environment variable; if unset, the command lists available AVDs (`emulator -list-avds`) and uses the first one, failing with a helpful message if none exist.
 2. `Unity -batchmode -quit -projectPath /Users/dakotabrown/Projects/chess-world -executeMethod BuildScripts.BuildAndroid -logFile -` — build APK.
 3. `adb install -r build/android/ChessWorld.apk` — install.
-4. `adb shell am start -n com.dakota.chessworld/com.unity3d.player.UnityPlayerActivity` — launch.
+4. `adb shell am start -n com.chessworld.app/com.unity3d.player.UnityPlayerActivity` — launch.
 5. `adb logcat -s Unity ChessWorld:*` — tail logs.
 
 `Assets/Editor/BuildScripts.cs` (~50 lines) wraps `BuildPipeline.BuildPlayer` so the command line can invoke it.
+
+**Android package identifier:** `com.chessworld.app` for Phase 1. This is a placeholder — if the real App Store / Play Store account requires a different bundle identifier, it gets changed in Phase 4 alongside the release pipeline. Changing it is a single `ProjectSettings` edit.
 
 **Prerequisites (command fails loudly with a helpful message if missing):**
 - Unity Hub + Unity LTS with Android Build Support module.
 - Android SDK + at least one AVD configured.
 - `JAVA_HOME`, `ANDROID_HOME`, and `UNITY_PATH` environment variables set.
+- Optional: `CHESS_WORLD_AVD` to pin a specific emulator.
 
 ## 8. File-length discipline
 
