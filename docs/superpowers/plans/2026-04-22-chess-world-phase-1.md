@@ -103,7 +103,7 @@ The implementer must have these installed and on PATH before starting. The plan 
 - **Unity Hub** with a Unity LTS editor (6000.x LTS or newer) + **Android Build Support** module.
 - **Xcode command-line tools** (for macOS toolchain).
 - **Android SDK + Platform Tools** (installed by Unity Hub along with Android Build Support is fine). `adb` must be on PATH.
-- **.NET SDK 8.0+** (for `dotnet test`).
+- **.NET SDK 8.0+** (for `dotnet test`). The test project targets `net10.0`; any SDK ≥ 10 works out-of-the-box. On macOS via Homebrew: `brew install dotnet`.
 - **Environment variables:** `UNITY_PATH` pointing to the Unity executable (e.g. `/Applications/Unity/Hub/Editor/6000.0.XXf1/Unity.app/Contents/MacOS/Unity`), `ANDROID_HOME` pointing to the Android SDK, `JAVA_HOME` pointing to a JDK 17.
 
 Verify before starting:
@@ -317,7 +317,7 @@ mkdir -p tests/Core
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
