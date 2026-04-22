@@ -1,0 +1,40 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+sysinfo.txt
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+MemoryCaptures/
+Recordings/
+
+# Unity generated
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.DotSettings.user
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# macOS
+.DS_Store
+
+# JetBrains / Rider
+.idea/
+.vs/
+
+# Keep test project .csproj (we author it by hand)
+!tests/Core/ChessWorld.Core.Tests.csproj
