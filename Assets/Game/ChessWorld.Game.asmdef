@@ -1,7 +1,7 @@
 {
     "name": "ChessWorld.Game",
     "rootNamespace": "ChessWorld.Game",
-    "references": ["ChessWorld.Core"],
+    "references": ["ChessWorld.Core", "Unity.ugui"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
