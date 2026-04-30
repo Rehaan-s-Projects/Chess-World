@@ -2345,8 +2345,9 @@ namespace ChessWorld.Core.Tests
 
             var ai = new MinimaxAi(depth: 3);
             var move = ai.ChooseMove(b);
-            Assert.That(move.From, Is.EqualTo(new Square(1, 0)));
-            Assert.That(move.To, Is.EqualTo(new Square(2, 2)));
+            Assert.That(move, Is.Not.Null);
+            Assert.That(move.Value.From, Is.EqualTo(new Square(1, 0)));
+            Assert.That(move.Value.To, Is.EqualTo(new Square(2, 2)));
         }
 
         [Test]

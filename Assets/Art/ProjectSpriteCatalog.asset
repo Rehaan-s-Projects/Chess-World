@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf424fcac737342e69f7cd875cca565a, type: 3}
+  m_Name: ProjectSpriteCatalog
+  m_EditorClassIdentifier: ChessWorld.Game::ChessWorld.Game.SpriteCatalog
+  PieceSprites:
+  - Side: 0
+    Type: 6
+    Sprite: {fileID: 21300000, guid: e59b46fa8f3cf496eb075c0954f1984e, type: 3}
+  - Side: 0
+    Type: 5
+    Sprite: {fileID: 21300000, guid: f7a6c184ed04c4481bfbb63951fe211c, type: 3}
+  - Side: 0
+    Type: 4
+    Sprite: {fileID: 21300000, guid: 8e2b8110e5e104a549f243f888d77160, type: 3}
+  - Side: 0
+    Type: 3
+    Sprite: {fileID: 21300000, guid: 7ef7400a6c45349b48b2a534ae7f7b44, type: 3}
+  - Side: 0
+    Type: 2
+    Sprite: {fileID: 21300000, guid: 5d3cf808a2aaf4b6caba32319c7693fd, type: 3}
+  - Side: 0
+    Type: 1
+    Sprite: {fileID: 21300000, guid: 9691b4ed502a64fccb4767b00520a7da, type: 3}
+  - Side: 1
+    Type: 6
+    Sprite: {fileID: 21300000, guid: 8b727f79ca8134f2f925143f5940d007, type: 3}
+  - Side: 1
+    Type: 5
+    Sprite: {fileID: 21300000, guid: f2fd96b3726d041abb683688a43ac5ab, type: 3}
+  - Side: 1
+    Type: 4
+    Sprite: {fileID: 21300000, guid: e56298a98101a49c39033636d268baef, type: 3}
+  - Side: 1
+    Type: 3
+    Sprite: {fileID: 21300000, guid: be109d3c81e1e475da6f574de1627c53, type: 3}
+  - Side: 1
+    Type: 2
+    Sprite: {fileID: 21300000, guid: 74e006ebae1c94b0aaf08ef2c5755bd3, type: 3}
+  - Side: 1
+    Type: 1
+    Sprite: {fileID: 21300000, guid: fb583b1428075417d8c50688e9ac4977, type: 3}
+  LightSquare: {fileID: 21300000, guid: 1e8eb043b76a14555a64c144121e61f5, type: 3}
+  DarkSquare: {fileID: 21300000, guid: 458d926bf4f6340c39af4a846354676a, type: 3}
+  HighlightSquare: {fileID: 21300000, guid: f7cc3256ab5844c6a82d7308b7f936aa, type: 3}
+  LegalMoveDot: {fileID: 21300000, guid: 8cabf0c1ff22248cf819888152c5b55d, type: 3}
+  DecayedBackground: {fileID: 0}
+  FallbackBackground: {fileID: 21300000, guid: 1e8eb043b76a14555a64c144121e61f5, type: 3}
