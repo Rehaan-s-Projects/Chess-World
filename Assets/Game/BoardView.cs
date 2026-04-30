@@ -69,7 +69,7 @@ namespace ChessWorld.Game
                 var sr = go.AddComponent<SpriteRenderer>();
                 bool light = (sq.File + sq.Rank) % 2 == 1;
                 sr.sprite = light ? Catalog?.LightSquare : Catalog?.DarkSquare;
-                sr.color = light ? new Color(0.86f, 0.86f, 0.86f) : new Color(0.22f, 0.22f, 0.22f);
+                sr.color = light ? new Color(0.67f, 0.67f, 0.69f) : new Color(0.33f, 0.33f, 0.37f);
                 sr.sortingOrder = 0;
                 _squares[sq] = go;
             }

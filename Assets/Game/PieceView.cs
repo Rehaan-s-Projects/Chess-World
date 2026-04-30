@@ -32,6 +32,9 @@ namespace ChessWorld.Game
                 _sr.color = Color.white;
             }
             _sr.sortingOrder = 5;
+            // Inset so the underlying square color frames each piece. Phase 2 sprites
+            // will have their own outlines/silhouettes; this is a placeholder concession.
+            transform.localScale = Vector3.one * 0.8f;
         }
 
         public IEnumerator AnimateMoveTo(Vector3 worldTarget, Square newSquare)

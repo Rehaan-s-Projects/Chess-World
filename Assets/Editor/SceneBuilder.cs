@@ -55,8 +55,10 @@ namespace ChessWorld.Editor
 
         private static void CreatePlaceholderSprites()
         {
-            var whitePiece = new Color32(230, 230, 230, 255);
-            var blackPiece = new Color32(30, 30, 30, 255);
+            // Distinct piece-vs-square contrast: pure black/white pieces inset onto
+            // mid-tone squares so they pop. Phase 2 replaces these with Blender renders.
+            var whitePiece = new Color32(255, 255, 255, 255);
+            var blackPiece = new Color32(10, 10, 10, 255);
 
             string[] whiteNames = { "W_King", "W_Queen", "W_Rook", "W_Bishop", "W_Knight", "W_Pawn" };
             foreach (var n in whiteNames)
@@ -66,8 +68,8 @@ namespace ChessWorld.Editor
             foreach (var n in blackNames)
                 WriteSolidSquarePng($"{PlaceholderDir}/{n}.png", blackPiece);
 
-            WriteSolidSquarePng($"{PlaceholderDir}/LightSquare.png", new Color32(220, 220, 220, 255));
-            WriteSolidSquarePng($"{PlaceholderDir}/DarkSquare.png", new Color32(60, 60, 60, 255));
+            WriteSolidSquarePng($"{PlaceholderDir}/LightSquare.png", new Color32(170, 170, 175, 255));
+            WriteSolidSquarePng($"{PlaceholderDir}/DarkSquare.png", new Color32(85, 85, 95, 255));
             WriteSolidSquarePng($"{PlaceholderDir}/HighlightSquare.png", new Color32(255, 255, 255, 255));
             WriteCirclePng($"{PlaceholderDir}/LegalMoveDot.png", 24);
         }
@@ -126,6 +128,7 @@ namespace ChessWorld.Editor
             }
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 64f;  // 64x64 PNG → 1 world unit (matches BoardView.SquareSize)
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
             importer.SaveAndReimport();
@@ -195,8 +198,17 @@ namespace ChessWorld.Editor
 
             // Background ------------------------------------------------------
             var bgGo = new GameObject("Background");
+            // Cover the full camera viewport so dark pieces have contrast.
+            // CameraFit produces an ortho size around 12, so 30x30 world units is safely beyond the viewport at any phone aspect.
+            bgGo.transform.localScale = new Vector3(30f, 30f, 1f);
             var bgSr = bgGo.AddComponent<SpriteRenderer>();
             bgSr.sortingOrder = -10;
+            // Tint the background a desaturated dusk-purple so it reads as a distinct surface
+            // beneath the board and lets pure-black/pure-white piece silhouettes stand out.
+            // The LightSquare sprite is ~0.67 brightness; this tint multiplies down to a visible
+            // medium-dark plum that contrasts with both the (10,10,10) black pieces and the
+            // (170,170,175) light squares.
+            bgSr.color = new Color(0.55f, 0.45f, 0.65f, 1f);
             var bgView = bgGo.AddComponent<BackgroundView>();
             bgView.Catalog = catalog;
 
