@@ -1,0 +1,11 @@
+{
+    "name": "ChessWorld.Editor",
+    "rootNamespace": "ChessWorld.Editor",
+    "references": ["ChessWorld.Game", "ChessWorld.Core"],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true
+}
