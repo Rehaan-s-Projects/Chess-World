@@ -42,14 +42,18 @@ namespace ChessWorld.Game
         {
             ClearHighlights("selection");
             if (!s.HasValue) return;
-            SpawnHighlight(s.Value, "selection", new Color(1f, 0.9f, 0.4f, 0.55f));
+            SpawnHighlight(s.Value, "selection", new Color(1f, 0.85f, 0.2f, 0.85f),
+                           Catalog?.HighlightSquare, scale: 1f);
         }
 
         public void HighlightLegalMoves(IEnumerable<Square> squares)
         {
             ClearHighlights("legal");
+            // Use the LegalMoveDot circle sprite (smaller, recognizable as "destination").
+            var dot = Catalog?.LegalMoveDot ?? Catalog?.HighlightSquare;
             foreach (var sq in squares)
-                SpawnHighlight(sq, "legal", new Color(0.4f, 1f, 0.4f, 0.35f));
+                SpawnHighlight(sq, "legal", new Color(0.3f, 0.95f, 0.4f, 0.95f),
+                               dot, scale: 0.55f);
         }
 
         public void ClearAllHighlights()
@@ -75,15 +79,18 @@ namespace ChessWorld.Game
             }
         }
 
-        private void SpawnHighlight(Square s, string tag, Color color)
+        private void SpawnHighlight(Square s, string tag, Color color, Sprite sprite, float scale)
         {
             var go = new GameObject($"Hi_{tag}_{s.ToAlgebraic()}");
             go.transform.SetParent(transform, false);
             go.transform.localPosition = WorldOf(s);
+            go.transform.localScale = Vector3.one * scale;
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = Catalog?.HighlightSquare;
+            sr.sprite = sprite;
             sr.color = color;
-            sr.sortingOrder = 1;
+            // Selection sits below the piece (so the piece icon stays visible);
+            // legal-move dots sit above pieces so a capture target is obvious.
+            sr.sortingOrder = tag == "legal" ? 6 : 1;
             var key = s;
             if (_highlights.TryGetValue(key, out var existing) && existing.name.Contains(tag))
                 Destroy(existing);

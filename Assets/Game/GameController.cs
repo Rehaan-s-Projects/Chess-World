@@ -78,6 +78,9 @@ namespace ChessWorld.Game
             if (_engine.Board.SideToMove == Side.Black)
             {
                 _aiPending = true;
+                // Hold "Zombies thinking…" visible briefly so the user sees the turn change
+                // before the AI's animated response starts.
+                yield return new WaitForSeconds(0.45f);
                 _ = Task.Run(() =>
                 {
                     var aiMove = _engine.ComputeAiMove();
