@@ -55,23 +55,30 @@ namespace ChessWorld.Editor
 
         private static void CreatePlaceholderSprites()
         {
-            // Distinct piece-vs-square contrast: pure black/white pieces inset onto
-            // mid-tone squares so they pop. Phase 2 replaces these with Blender renders.
+            // Piece sprites: only generate solid-color fallbacks if no real art is on disk.
+            // This lets dropped-in chess piece PNGs (e.g. Wikipedia's cburnett set) survive
+            // re-runs of SceneBuilder. Real art lives in source control alongside this script.
             var whitePiece = new Color32(255, 255, 255, 255);
             var blackPiece = new Color32(10, 10, 10, 255);
-
             string[] whiteNames = { "W_King", "W_Queen", "W_Rook", "W_Bishop", "W_Knight", "W_Pawn" };
             foreach (var n in whiteNames)
-                WriteSolidSquarePng($"{PlaceholderDir}/{n}.png", whitePiece);
-
+                WritePngIfMissing($"{PlaceholderDir}/{n}.png", whitePiece);
             string[] blackNames = { "B_King", "B_Queen", "B_Rook", "B_Bishop", "B_Knight", "B_Pawn" };
             foreach (var n in blackNames)
-                WriteSolidSquarePng($"{PlaceholderDir}/{n}.png", blackPiece);
+                WritePngIfMissing($"{PlaceholderDir}/{n}.png", blackPiece);
 
+            // Squares + UI helpers: always regenerate so the abstract assets stay in sync
+            // with the colors hard-coded above.
             WriteSolidSquarePng($"{PlaceholderDir}/LightSquare.png", new Color32(170, 170, 175, 255));
             WriteSolidSquarePng($"{PlaceholderDir}/DarkSquare.png", new Color32(85, 85, 95, 255));
             WriteSolidSquarePng($"{PlaceholderDir}/HighlightSquare.png", new Color32(255, 255, 255, 255));
             WriteCirclePng($"{PlaceholderDir}/LegalMoveDot.png", 24);
+        }
+
+        private static void WritePngIfMissing(string path, Color32 color)
+        {
+            if (System.IO.File.Exists(path)) return;
+            WriteSolidSquarePng(path, color);
         }
 
         private static void WriteSolidSquarePng(string path, Color32 color)
