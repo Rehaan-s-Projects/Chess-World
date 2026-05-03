@@ -25,6 +25,12 @@ namespace ChessWorld.Core
             Result = GameResult.InProgress;
         }
 
+        public void StartNewGame(Board initialPosition)
+        {
+            Board = initialPosition;
+            Result = GameResult.InProgress;
+        }
+
         public IReadOnlyList<Move> LegalMovesFrom(Square from) =>
             MoveGenerator.LegalMovesFrom(Board, from).ToList();
 

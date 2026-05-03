@@ -49,9 +49,25 @@ namespace ChessWorld.Game
             BlackCaptures.Clear();
             ClearAllViews();
 
-            _engine.StartNewGame();
+            _engine.StartNewGame(BuildInitialPosition());
             SpawnViewsFromBoard();
             TurnIndicator?.SetTurn(_engine.Board.SideToMove);
+        }
+
+        // Chess World Phase 1 setup: black's only pieces are pawns (rank 7),
+        // white's only pieces are the two rooks (a1, h1). Eliminate mode rules
+        // mean the game ends when one side has zero pieces remaining.
+        // Fully qualified ChessWorld.Core.Board to avoid collision with the BoardView
+        // field also named "Board" on this MonoBehaviour.
+        private static ChessWorld.Core.Board BuildInitialPosition()
+        {
+            var pieces = new Piece[64];
+            for (int file = 0; file < 8; file++)
+                pieces[new Square(file, 6).Index] = new Piece(Side.Black, PieceType.Pawn);
+            pieces[new Square(0, 0).Index] = new Piece(Side.White, PieceType.Rook);
+            pieces[new Square(7, 0).Index] = new Piece(Side.White, PieceType.Rook);
+            return ChessWorld.Core.Board.Empty()
+                .With(pieces, Side.White, CastlingRights.None, null, 0, 1);
         }
 
         private void RestartGame() => StartNewGame();
